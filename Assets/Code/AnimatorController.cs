@@ -8,7 +8,7 @@ public class AnimatorController : MonoBehaviour
     private Rigidbody2D rigidBody;
     private SpriteRenderer sprite;
 
-    private enum ListaAnimacoes { idle, running, jumping }
+    private enum ListaAnimacoes { idle, running, jumping, attacking }
     private ListaAnimacoes state = ListaAnimacoes.idle;
     private float movimentoX = 0f;
 
@@ -22,12 +22,16 @@ public class AnimatorController : MonoBehaviour
     void Update()
     {
         this.changeAnimationByAction();
+        this.flipSpriteToDirection();
+        
     }
 
     private void changeAnimationByAction() {
  
         ListaAnimacoes state;
         movimentoX = Input.GetAxisRaw("Horizontal");
+
+      
 
         //Checa se o player está andando
         if(movimentoX != 0f) {
@@ -41,6 +45,12 @@ public class AnimatorController : MonoBehaviour
         {
             state = ListaAnimacoes.jumping;
         }
+
+        if (Input.GetButtonDown("Fire1")) {
+            state = ListaAnimacoes.attacking;
+            Debug.Log("Caiu");
+        }
+
 
         //seta a animação correta
         animator.SetInteger("state", (int)state);
