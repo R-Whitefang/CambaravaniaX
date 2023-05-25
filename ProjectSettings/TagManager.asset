@@ -7,6 +7,8 @@ TagManager:
   - Ground
   - DamageGround
   - EnemyProjectile
+  - VidaText
+  - HealingItem
   layers:
   - Default
   - TransparentFX
