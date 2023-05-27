@@ -12,6 +12,8 @@ public class AnimatorController : MonoBehaviour
     private ListaAnimacoes state = ListaAnimacoes.idle;
     private float movimentoX = 0f;
 
+    private int currentArma = 0;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -21,6 +23,7 @@ public class AnimatorController : MonoBehaviour
 
     void Update()
     {
+        this.getCurrentArma();
         this.changeAnimationByAction();
         this.flipSpriteToDirection();
         
@@ -30,8 +33,6 @@ public class AnimatorController : MonoBehaviour
  
         ListaAnimacoes state;
         movimentoX = Input.GetAxisRaw("Horizontal");
-
-      
 
         //Checa se o player está andando
         if(movimentoX != 0f) {
@@ -51,9 +52,14 @@ public class AnimatorController : MonoBehaviour
             Debug.Log("Caiu");
         }
 
-
         //seta a animação correta
+        animator.SetInteger("tipoArma",currentArma);
         animator.SetInteger("state", (int)state);
+    }
+
+    private void getCurrentArma() {
+        gameObject.TryGetComponent(out DanoController DanoController);
+        currentArma = (int)DanoController.arma;
     }
 
     //Flipa o sprite do player baseado na direção que ele está indo,

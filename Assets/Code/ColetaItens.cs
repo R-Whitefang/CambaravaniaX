@@ -13,15 +13,12 @@ public class ColetaItens : MonoBehaviour
     }
 
     private void causarDanoArea(GameObject item) {
-        continue;
     }
 
     private void guardarArma(GameObject item ) {
-        continue;
     }
 
     private void guardarUpgradeVida(GameObject item) {
-        continue;
     }
 
     private void OnTriggerEnter2D(Collider2D objetoTriggado) {
@@ -31,7 +28,7 @@ public class ColetaItens : MonoBehaviour
                 Destroy(objetoTriggado.gameObject);
                 break;
             case "AOEDamageItem":
-                this.causarDanoArea();
+                this.causarDanoArea(objetoTriggado.gameObject);
                 Destroy(objetoTriggado.gameObject);
                 break; 
             case "Weapon":
