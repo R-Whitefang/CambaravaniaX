@@ -7,17 +7,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     private bool isCausandoDano = false;
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    //Corotina que chama a função CausarDanoAoPlayer a cada 1 segundo para evitar dano exponencial em segundos
     IEnumerator CausarDanoAoPlayer(GameObject player){
         yield return new WaitForSeconds(0.5f);
             player.transform.TryGetComponent(out VidaController vida);
@@ -27,6 +17,7 @@ public class EnemyController : MonoBehaviour
     }
 
     
+    //Verifica se o inimigo colidiu com o player, entao causa dano se for o caso
     private void OnCollisionEnter2D(Collision2D objetoColidiu) {
         if(objetoColidiu.gameObject.tag == "Player" && !isCausandoDano) {
             isCausandoDano = true;
@@ -34,6 +25,7 @@ public class EnemyController : MonoBehaviour
         } 
     }
 
+    //Verifica se o inimigo continua colidindo com o player, entao causa dano se for o caso
     private void OnCollisionStay2D(Collision2D objetoColidiu) {
         if(objetoColidiu.gameObject.tag == "Player" && !isCausandoDano) {
             isCausandoDano = true;

@@ -9,6 +9,7 @@ TagManager:
   - EnemyProjectile
   - VidaText
   - HealingItem
+  - PlayerProjectile
   layers:
   - Default
   - TransparentFX

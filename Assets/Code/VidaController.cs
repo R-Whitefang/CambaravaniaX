@@ -7,22 +7,19 @@ public class VidaController : MonoBehaviour
 {
     // Start is called before the first frame update
     public int vidaBase = 100;
-    public int vidaTotal = 0;
+    public int vidaTotal = 100;
     public int debitoDano = 0;
-    public Text vidaText;
 
     void Start()
     {
-        StartCoroutine(DebitarDano());
         inicializarVida();
-        
+        StartCoroutine(DebitarDano());
     }
 
     // Update is called once per frame
     void Update()
     {
         deveMorrer();
-        mostrarVidaNaTela();
     }
 
     void inicializarVida()
@@ -38,9 +35,7 @@ public class VidaController : MonoBehaviour
         yield return null;
     }
 
-    private void mostrarVidaNaTela() {
-      vidaText.text = (vidaTotal.ToString() + "/" + vidaBase.ToString());
-    }
+    
 
     private void deveTomarDano() {
         //O dano maximo em um tick é 40, quando for menor toma o dano full

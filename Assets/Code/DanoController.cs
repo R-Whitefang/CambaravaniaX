@@ -7,24 +7,31 @@ public class DanoController : MonoBehaviour
 {
 
     public enum ArmaList { chicote, faca };
-    public int[] DanoArmaList = {2, 5, 10};
+    public int[] DanoArmaList = { 2, 5, 10 };
     public ArmaList arma = ArmaList.chicote;
-    public int danoArma = 0;
+    public int danoArma = 2;
     private Animator animator;
     public bool isAttacking = false;
+    public bool isCausandoDano = false;
 
     public GameObject faca;
 
     void Start()
     {
+        inicializarDano();
         animator = GetComponent<Animator>();
-        StartCoroutine(CheckAttackEnded());
+        InvokeRepeating("CheckAttackEnded", 1.0f, 1.0f);
     }
 
     void Update()
     {
         this.trocarArma();
         this.Attack();
+    }
+    private void inicializarDano()
+    {
+        arma = ArmaList.chicote;
+        danoArma = DanoArmaList[(int)arma];
     }
 
 
@@ -64,9 +71,9 @@ public class DanoController : MonoBehaviour
     {
         if (animator.GetInteger("state") == 3)
         {
-            isAttacking = true;        
+            isAttacking = true;
             //cria uma faca
-            Instantiate(this.faca,new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Quaternion.identity);
+            Instantiate(this.faca, new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Quaternion.identity);
         }
     }
 
@@ -79,46 +86,50 @@ public class DanoController : MonoBehaviour
     }
 
 
+    //Verifica se o player colidiu com um inimigo ou projetil de inimigo, entao causa dano se for o caso
     private void OnCollisionEnter2D(Collision2D objetoColidiu)
     {
-        if ((objetoColidiu.gameObject.tag == "Enemy" || objetoColidiu.gameObject.tag == "EnemyProjectile") && isAttacking)
+
+        if ((objetoColidiu.gameObject.tag == "Enemy" || objetoColidiu.gameObject.tag == "EnemyProjectile")
+            && isAttacking && !isCausandoDano
+            )
         {
-            GameObject inimigoAtingido = objetoColidiu.gameObject;
-            StartCoroutine(CausarDano(inimigoAtingido));
+            isCausandoDano = true;
+            StartCoroutine(CausarDano(objetoColidiu.gameObject));
         }
     }
 
+    //Verifica se o player colidiu com um inimigo ou projetil de inimigo, entao causa dano se for o caso
     private void OnCollisionStay2D(Collision2D objetoColidiu)
     {
-        if ((objetoColidiu.gameObject.tag == "Enemy" || objetoColidiu.gameObject.tag == "EnemyProjectile") && isAttacking)
+
+        if ((objetoColidiu.gameObject.tag == "Enemy" || objetoColidiu.gameObject.tag == "EnemyProjectile")
+            && isAttacking && !isCausandoDano
+            )
         {
-            GameObject inimigoAtingido = objetoColidiu.gameObject;
-            StartCoroutine(CausarDano(inimigoAtingido));
+            isCausandoDano = true;
+            StartCoroutine(CausarDano(objetoColidiu.gameObject));
+
         }
     }
 
+    //Corotina que chama a função CausarDano a cada 1 segundo para evitar dano exponencial em segundos
     public IEnumerator CausarDano(GameObject inimigoAtingido)
     {
-        Debug.Log(this.danoArma);
         yield return new WaitForSeconds(1f);
-        Destroy(inimigoAtingido);
+        inimigoAtingido.transform.TryGetComponent(out VidaController vida);
+        vida.debitoDano += danoArma;
+        isCausandoDano = false;
         yield return null;
     }
 
-    public IEnumerator CheckAttackEnded()
+    public void CheckAttackEnded()
     {
-        yield return new WaitForSeconds(0.3f);
         if (animator.GetInteger("state") != 3)
         {
             isAttacking = false;
         }
-
-        yield return null;
     }
-
-
-    
-
 
 
 }

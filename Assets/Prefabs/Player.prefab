@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6213981170496576099}
   - component: {fileID: 2171301308063339602}
   - component: {fileID: 1760429293937239414}
+  - component: {fileID: 1092309040585863832}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -188,7 +189,6 @@ MonoBehaviour:
   vidaBase: 100
   vidaTotal: 100
   debitoDano: 0
-  vidaText: {fileID: 0}
 --- !u!114 &6213981170496576099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,4 +225,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb609b9f36767e42b6ee89a01735d59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DanoArmaList: 02000000050000000a000000
+  arma: 0
+  danoArma: 0
   isAttacking: 0
+  faca: {fileID: 3164409809796948170, guid: a24f25d10727b2442a859f9c75992fe5, type: 3}
+--- !u!114 &1092309040585863832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5976879935424001568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c3126653a28dad468d394e8f9cd35a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vidaText: {fileID: 0}
+  armaText: {fileID: 0}
