@@ -21,6 +21,7 @@ public class BossController : EnemyController
     }
 
     private void OnDestroy() {
+        base.droparItem();
         DroparBossItem();
         LiberarPorta();
     }

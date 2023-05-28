@@ -9,9 +9,20 @@ public class EnemyController : MonoBehaviour
     public int danoDoInimigo = 2;
 
     public bool isBoss = false;
-    
-    private void droparItem() {
 
+
+    void Start() {
+
+    }
+    
+    public void droparItem() {
+        
+        GameObject listItens = GameObject.FindWithTag("ListaItens");
+        listItens.transform.TryGetComponent(out ListaItens lista);
+        GameObject itemSelecionado = lista.itensNormais[Random.Range(0, lista.itensNormais.Length)];
+
+        Instantiate(itemSelecionado, 
+            new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Quaternion.identity);
         
     }
 

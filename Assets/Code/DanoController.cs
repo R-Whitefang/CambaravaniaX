@@ -117,10 +117,16 @@ public class DanoController : MonoBehaviour
     public IEnumerator CausarDano(GameObject inimigoAtingido)
     {
         yield return new WaitForSeconds(1f);
-        inimigoAtingido.transform.TryGetComponent(out VidaController vida);
-        vida.debitoDano += danoArma;
-        isCausandoDano = false;
+        try {
+            inimigoAtingido.transform.TryGetComponent(out VidaController vida);
+            vida.debitoDano += danoArma;
+        } catch  {
+        } finally {
+            isCausandoDano = false;
+
+        }
         yield return null;
+
     }
 
     public void CheckAttackEnded()
