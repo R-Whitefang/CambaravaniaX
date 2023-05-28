@@ -2,22 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class Scenes : MonoBehaviour
+public class PortaController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public bool isAcessivel = false;
 
     private void OnTriggerEnter2D(Collider2D objetoColidiu) {
-        if (objetoColidiu.gameObject.tag == "Player")
+        if (objetoColidiu.gameObject.tag == "Player" && isAcessivel == true)
         {
             SceneManager.LoadScene(1, LoadSceneMode.Single);
         }

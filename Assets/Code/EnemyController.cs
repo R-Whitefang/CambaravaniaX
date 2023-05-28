@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    // Start is called before the first frame update
     private bool isCausandoDano = false;
+    //CADA INIMIGO TERÁ SEU DANO SETTADO AQUI
+    public int danoDoInimigo = 2;
+
+    public bool isBoss = false;
+    
+    private void droparItem() {
+
+        
+    }
 
     //Corotina que chama a função CausarDanoAoPlayer a cada 1 segundo para evitar dano exponencial em segundos
     IEnumerator CausarDanoAoPlayer(GameObject player){
         yield return new WaitForSeconds(0.5f);
             player.transform.TryGetComponent(out VidaController vida);
-            vida.debitoDano += 10;
+            vida.debitoDano += danoDoInimigo;
             isCausandoDano = false;
         yield return null;
     }
@@ -31,5 +39,10 @@ public class EnemyController : MonoBehaviour
             isCausandoDano = true;
             StartCoroutine(CausarDanoAoPlayer(objetoColidiu.gameObject));
         }
+    }
+
+    //Ao Destruir o inimigo ele dropa um item
+    private void OnDestroy() {
+        droparItem();
     }
 }
