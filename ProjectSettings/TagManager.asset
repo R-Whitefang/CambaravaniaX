@@ -10,6 +10,9 @@ TagManager:
   - VidaText
   - HealingItem
   - PlayerProjectile
+  - ListaItens
+  - Porta
+  - Enemy
   layers:
   - Default
   - TransparentFX
