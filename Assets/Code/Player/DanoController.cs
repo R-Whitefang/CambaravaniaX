@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static MotionController;
+using UnityEngine.SceneManagement;
 
 public class DanoController : MonoBehaviour
 {
 
-    public enum ArmaList { chicote, faca };
-    public int[] DanoArmaList = { 2, 5, 10 };
+    public enum ArmaList { chicote, faca, mangual };
+    public int[] DanoArmaList = { 5, 2, 10 };
     public ArmaList arma = ArmaList.chicote;
-    public int danoArma = 2;
+    public int danoArma = 5;
     private Animator animator;
     public bool isAttacking = false;
     public bool isCausandoDano = false;
@@ -34,6 +35,22 @@ public class DanoController : MonoBehaviour
         danoArma = DanoArmaList[(int)arma];
     }
 
+    private ArmaList isArmaLiberada(ArmaList arma) {
+        
+         var fase = SceneManager.GetActiveScene();
+         string nomeFase = fase.name;
+
+         if(arma == ArmaList.faca && nomeFase == "Floresta" || nomeFase == "Canion") {
+            return ArmaList.faca;
+         }
+
+         if(arma == ArmaList.mangual && nomeFase == "Canion"){
+            return ArmaList.mangual;
+         }
+
+         return ArmaList.chicote;
+    }
+
 
     private void trocarArma()
     {
@@ -42,12 +59,16 @@ public class DanoController : MonoBehaviour
 
             switch (arma)
             {
-                case ArmaList.chicote:
-                    arma = ArmaList.faca;
+                 case ArmaList.chicote:
+                    arma = ArmaList.chicote;
                     danoArma = DanoArmaList[(int)arma];
                     break;
                 case ArmaList.faca:
-                    arma = ArmaList.chicote;
+                    arma = isArmaLiberada(ArmaList.faca);
+                    danoArma = DanoArmaList[(int)arma];
+                    break;
+                case ArmaList.mangual:
+                    arma = isArmaLiberada(ArmaList.mangual);
                     danoArma = DanoArmaList[(int)arma];
                     break;
             }
@@ -64,6 +85,9 @@ public class DanoController : MonoBehaviour
             case ArmaList.faca:
                 AttackFaca();
                 break;
+            case ArmaList.mangual:
+                AttackMangual();
+                break;
         }
     }
 
@@ -79,6 +103,13 @@ public class DanoController : MonoBehaviour
 
     private void AttackChicote()
     {
+        if (animator.GetInteger("state") == 3)
+        {
+            isAttacking = true;
+        }
+    }
+
+    private void AttackMangual() {
         if (animator.GetInteger("state") == 3)
         {
             isAttacking = true;

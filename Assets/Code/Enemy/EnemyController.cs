@@ -10,20 +10,49 @@ public class EnemyController : MonoBehaviour
 
     public bool isBoss = false;
 
+    public bool isMelee = false;
+
+    private Animator animator;
+
+    public float rangeDeteccao = 10f;
 
     void Start() {
+        animator = GetComponent<Animator>();
+    }
+
+    void Update() {
+        estaVendoJogador();
+    }
+
+    public void estaVendoJogador() {
+        GameObject player = GameObject.FindWithTag("Player");
+        if (Vector2.Distance(transform.position, player.transform.position) <= rangeDeteccao)
+        {
+           atacar();
+        } else
+        {
+           pararAtaque();
+        }
 
     }
+
+    public void atacar() {
+        animator.SetBool("atacando", true);
+    }
+
+    public void pararAtaque() {
+        if(isBoss == false) {
+            animator.SetBool("atacando", false);
+        }
+    }
     
-    public void droparItem() {
-        
+    public void droparItem(float posicaoX, float posicaoY) {
         GameObject listItens = GameObject.FindWithTag("ListaItens");
         listItens.transform.TryGetComponent(out ListaItens lista);
         GameObject itemSelecionado = lista.itensNormais[Random.Range(0, lista.itensNormais.Length)];
 
         Instantiate(itemSelecionado, 
-            new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Quaternion.identity);
-        
+            new Vector2(posicaoX, posicaoY), Quaternion.identity);
     }
 
     //Corotina que chama a função CausarDanoAoPlayer a cada 1 segundo para evitar dano exponencial em segundos
@@ -34,7 +63,6 @@ public class EnemyController : MonoBehaviour
             isCausandoDano = false;
         yield return null;
     }
-
     
     //Verifica se o inimigo colidiu com o player, entao causa dano se for o caso
     private void OnCollisionEnter2D(Collision2D objetoColidiu) {
@@ -54,6 +82,8 @@ public class EnemyController : MonoBehaviour
 
     //Ao Destruir o inimigo ele dropa um item
     private void OnDestroy() {
-        droparItem();
+        float posicaoX = gameObject.transform.position.x;
+        float posicaoY = gameObject.transform.position.y;
+        droparItem(posicaoX, posicaoY);
     }
 }

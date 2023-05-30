@@ -21,7 +21,9 @@ public class BossController : EnemyController
     }
 
     private void OnDestroy() {
-        base.droparItem();
+        float posicaoX = gameObject.transform.position.x;
+        float posicaoY = gameObject.transform.position.y;
+        base.droparItem(posicaoX, posicaoY);
         DroparBossItem();
         LiberarPorta();
     }

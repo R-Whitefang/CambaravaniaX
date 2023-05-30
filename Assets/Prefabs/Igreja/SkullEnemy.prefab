@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1663486428}
   - component: {fileID: 5897698948695203809}
   - component: {fileID: 1737290549}
+  - component: {fileID: 8140104219438275208}
   m_Layer: 0
   m_Name: SkullEnemy
   m_TagString: EnemyProjectile
@@ -126,6 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5da6112edd989b843a1cc4924915ecfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  danoDoInimigo: 2
+  isBoss: 0
+  isMelee: 0
 --- !u!50 &5897698948695203809
 Rigidbody2D:
   serializedVersion: 4
@@ -159,6 +163,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4213cc800295609479e1cbda7c0d5da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vidaBase: 20
+  vidaBase: 3
   vidaTotal: 0
   debitoDano: 0
+--- !u!95 &8140104219438275208
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2981802316204172007}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5f8e2ebd461790a4da2ba766361dfff9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
